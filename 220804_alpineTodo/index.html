@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+	<style>
+		.delete:hover{
+			cursor: pointer;
+		}
+	</style>
+	<title>Document</title>
+</head>
+<body>
+	<!-- 할일 입력창 및 버튼 만들기 -->
+	<div x-data="{ todos : [], userInput: ''} ">	<!-- 입력받을 리스트와 빈공간 배정-->
+		<form x-on:submit.prevent>		<!-- 입력하고 아래의 값이 사라지는 것 방지-->
+			<input x-model="userInput" type="text" placeholder="할일 입력하기">
+
+			<!-- 빈값 입력방지 하기 위하여 trim, length함수 이용하여 조건문 사용 -->
+			<button x-on:click="if(userInput.trim().length > 0) todos.push({name: userInput, completed: false}); userInput = ''">Add</button>
+		</form>
+
+		<!-- todo입력값 리스트의 값 뿌려주기 -->
+		<template x-for="todo in todos">
+			<div>
+				<input type="checkbox">				<!-- 체크박스 -->
+				<span x-text="todo.name"></span>	<!-- 할일 목록 -->
+
+				<!-- JS함수 : x버튼을 클릭하면 배열에서 항목을 제거 -->
+				<button class="delete" x-on:click="todos = todos.filter((currTodo) => currTodo != todo)">x</button>	<!-- x를 버튼으로 -->
+			</div>
+		</template>
+	</div>
+</body>
+</html>
